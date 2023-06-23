@@ -23,13 +23,12 @@ app.use((req, res, next) => {
 });
 
 app.get("/videos", (req: Request, res: Response) => {
-    console.log(req.url);
     const range = req.headers.range;
     if (!range) {
         res.status(400).send("Requires Range header");
     }
 
-    const videoPath = "P01_12.MP4";
+    const videoPath = req.query.videoid;
     const videoSize = fs.statSync(videosFolderPath + "/" + videoPath).size;
 
     const CHUNK_SIZE = 10 ** 6; // 1MB
